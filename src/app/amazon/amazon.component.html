@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-xs-6 col-xs-offset-3">
+          <p>Select CSV file to read:</p>
+          <input id="readfile" type="file"  (change)="loadFile($event)" />
+      </div>
+  </div>
+  <hr />
+  <div class="row">
+      <div class="col-xs-4">
+          <table class="table" id="keyWordCountTable">
+              <tr class="thead">
+                  <th>Keyword</th>
+                  <th>Count</th>
+              </tr>
+              <tr *ngFor="let sortedWord of sortedWords" (click)="toggleSelect($event)"  class="tdata">
+                <td>{{ sortedWord.Keyword }}</td>
+                <td>{{ sortedWord.Count }}</td>
+              </tr>
+          </table>
+      </div>
+      <div class="col-xs-2">
+          <div><button id="generateButton" class="btn btn-success" (click)="generateTags();">Generate Tags</button></div>
+      </div>
+      <div class="col-xs-6">
+          <input type="text" maxlength="50" id="keyWordBuilt0" class="tagHelper">
+          <input type="text" maxlength="50" id="keyWordBuilt1" class="tagHelper">
+          <input type="text" maxlength="50" id="keyWordBuilt2" class="tagHelper">
+          <input type="text" maxlength="50" id="keyWordBuilt3" class="tagHelper">
+          <input type="text" maxlength="50" id="keyWordBuilt4" class="tagHelper">
+      </div>
+  </div>
+</div>

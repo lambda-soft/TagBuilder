@@ -1,0 +1,10 @@
+.tagHelper{
+    margin: 2px;
+    display: block;
+    resize: none;
+    width: 60%;
+}
+
+table.table  tr:hover{
+background-color: rgba(124, 125, 126, 0.473);
+}
