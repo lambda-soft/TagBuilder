@@ -1,3 +1,6 @@
+//import { ZippyInstructionsComponent } from './../zippy-instructions/zippy-instructions.component';
+import { element } from 'protractor';
+import { AmazonAutoCompleteService } from './../services/amazon-auto-complete.service';
 import { Component, OnInit } from '@angular/core';
 import 'jquery';
 import * as alaSQLSpace from 'alasql';
@@ -9,13 +12,44 @@ import * as alaSQLSpace from 'alasql';
 })
 export class AmazonComponent implements OnInit {
 
-  private sortedWords = [];
-  constructor() {
+  sortedWords = [];
+  isLoading = false;
+  isError = false;
+
+  constructor(private service: AmazonAutoCompleteService) {
   }
 
   ngOnInit() {
   }
+  isPreposition(x: string){
+    let prepArray = [
+      "with","at","from","into","during","including","until","against","among",
+      "throughout","despite","towards","upon","concerning","of","to","in","for",
+      "on","by","about","like","through","over","before","between","after","since",
+      "without","under","within","along","following","across","behind","beyond","plus",
+      "except","but","up","out","around","down","off","above","near"
+    ];
+    let isPrep = false;
+    prepArray.forEach(element => {
+      if (x == element)
+        isPrep = true;
+    });
+    return isPrep;
+  }
+  searchTermBuilder(terms: Array<string>){
+    let builtTerms = [];
+    let tempTerms = terms.filter((val) =>{
+        return !this.isPreposition(val);
+    })
 
+    for(let i = 0; i < tempTerms.length; i++){
+      for (let j = 0; j < tempTerms.length; j++) {
+        if(j != i)
+          builtTerms.push(tempTerms[i]+" "+tempTerms[j]);
+      }
+    }
+    return builtTerms;
+  }
   createSortedWords(keyWordCountDict) {
     let tempSortArray = [];
     let tempSortedWords = [];
@@ -73,6 +107,50 @@ export class AmazonComponent implements OnInit {
       $('#keyWordBuilt' + index).val(element);
     });
   }
+  generateSearchKeywords(term: string, iteration: number, keywords, terms?: Array<string>) {
+    // if(terms == null)
+    //   terms = this.searchTermBuilder(term.split(' '));
+    if(!this.isLoading)
+      this.isLoading = !this.isLoading;
+    if (keywords.length < 500) {
+      this.service.generateKeywordList(term)
+        .subscribe(result => {
+          result[1].forEach(element => {
+            keywords.push({
+              Keyword: element
+            });
+          });
+          try {
+            this.isError = false;
+            if (terms == null)
+              terms = this.searchTermBuilder(result[1][1].split(' '));
+            if (iteration < 5)
+              if (result[1][0] != null) {
+                if (terms.length == 0)
+                  terms = this.searchTermBuilder(result[1][0].split(' '));
+                this.generateSearchKeywords(result[1][0], iteration + 1, keywords, terms);
+
+              }
+              else {
+                let temp = terms.pop();
+                this.generateSearchKeywords(temp, 1, keywords, terms);
+              }
+            else {
+              let temp = terms.pop();
+              this.generateSearchKeywords(temp, 1, keywords, terms);
+            }
+          }
+          catch (ex) {
+            this.isError = true;
+            this.isLoading = !this.isLoading;
+          }
+        });
+    }
+    else{
+      this.isLoading = false;
+      this.processKeywordData(keywords);
+    }
+  }
   resetTable() {
     $('.tdata').remove();
   }
@@ -85,7 +163,7 @@ export class AmazonComponent implements OnInit {
   }
 
   toggleSelect(event) {
-    let el = event.originalTarget.parentElement;
+    let el = $(event.target).parent();
     if ($(el).hasClass('bg-success'))
       $(el).removeClass('bg-success');
     else
@@ -152,13 +230,29 @@ export class AmazonComponent implements OnInit {
     this.sortedWords = this.createSortedWords(keyWordCountDict);
   }
 
+  copyTags(event){
+    let parent = $(event.target).parent();
+    if(!$(parent).is("div"))
+      parent = $(parent).parent();
+    let childID = $(parent).children("input").attr('id');
+
+    let copyText = (document.getElementById(childID)) as HTMLInputElement;
+    copyText.select();
+    document.execCommand("copy");
+  }
   generateTags() {
     this.resetTagFields();
-
     let tags = this.createTagsArray();
     let limitedKeywordArray = this.createLimitedKeywordsArray(tags);
 
     this.displayTags(limitedKeywordArray);
   }
-
+  keywordFromSearch(event) {
+    let keywords = [];
+    let parent = $(event.target).parent();
+    let searchQuery = (($(parent).children("input").val()) as string).toLowerCase();
+    
+    this.resetDisplays();
+    this.generateSearchKeywords(searchQuery, 1, keywords);
+  }
 }

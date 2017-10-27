@@ -1,0 +1,16 @@
+<div class="panel-group">
+  <div class="panel panel-info">
+    <div class="panel-heading"  (click)="zippyToggle()">
+      <h4 class="panel-title">
+          <span class="glyphicon" 
+          [ngClass]="{
+                        'glyphicon-chevron-right': !isExpanded,
+                        'glyphicon-chevron-down': isExpanded
+          }"></span>
+        <strong>Click to Show Instructions</strong>
+      </h4>
+    </div>
+    <div *ngIf="isExpanded" class="panel-body" [innerHTML]="instructions">
+    </div>
+  </div>
+</div>

@@ -1,33 +1,86 @@
-<div class="container-fluid">
-  <div class="row">
-      <div class="col-xs-6 col-xs-offset-3">
-          <p>Select CSV file to read:</p>
-          <input id="readfile" type="file"  (change)="loadFile($event)" />
-      </div>
-  </div>
-  <hr />
-  <div class="row">
-      <div class="col-xs-4">
-          <table class="table" id="keyWordCountTable">
-              <tr class="thead">
-                  <th>Keyword</th>
-                  <th>Count</th>
-              </tr>
-              <tr *ngFor="let sortedWord of sortedWords" (click)="toggleSelect($event)"  class="tdata">
+<div class="row">
+    <div class="col-xs-12 col-md-4 col-md-offset-1">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Upload Keyword File</h3>
+            </div>
+            <div class="panel-body">
+                <p>Select CSV file to read:</p>
+                <input id="readfile" type="file" (change)="loadFile($event)" />
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-4 col-md-offset-2">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Generate From Search</h3>
+            </div>
+            <div class="panel-body">
+                <input class="searchInput" type="text" maxlength="50" (keyup.enter)="keywordFromSearch($event)">&nbsp;
+                <button id="searchButton" class="btn btn-info" (click)="keywordFromSearch($event)">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+                <div *ngIf="isError"class="search-error"><strong>Error:</strong> Search term too short, specific, or misspelled. Please try again.</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <zippy-instructions seotype="amazon"></zippy-instructions>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-md-4">
+        <table class="table" id="keyWordCountTable">
+            <tr class="thead">
+                <th>Keyword</th>
+                <th>Count</th>
+            </tr>
+            <tr *ngFor="let sortedWord of sortedWords" (click)="toggleSelect($event)" class="tdata">
                 <td>{{ sortedWord.Keyword }}</td>
                 <td>{{ sortedWord.Count }}</td>
-              </tr>
-          </table>
-      </div>
-      <div class="col-xs-2">
-          <div><button id="generateButton" class="btn btn-success" (click)="generateTags();">Generate Tags</button></div>
-      </div>
-      <div class="col-xs-6">
-          <input type="text" maxlength="50" id="keyWordBuilt0" class="tagHelper">
-          <input type="text" maxlength="50" id="keyWordBuilt1" class="tagHelper">
-          <input type="text" maxlength="50" id="keyWordBuilt2" class="tagHelper">
-          <input type="text" maxlength="50" id="keyWordBuilt3" class="tagHelper">
-          <input type="text" maxlength="50" id="keyWordBuilt4" class="tagHelper">
-      </div>
-  </div>
+            </tr>
+        </table>
+        <div class="loadingIndicator" [hidden]="!isLoading">
+            <img src="/loading.gif" alt="Loading" title="Loading" width="15%" height="15%">
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-2">
+        <div>
+            <button id="generateButton" class="btn btn-success" (click)="generateTags();">Generate Tags</button>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-6">
+        <div class="tagLine">
+            <input type="text" maxlength="50" id="keyWordBuilt0" class="tagHelper"> &nbsp;
+            <button class="btn btn-xs btn-primary" (click)="copyTags($event)">
+                <span class="glyphicon glyphicon-copy" aria-hidden="true"> Copy</span>
+            </button>
+        </div>
+        <div class="tagLine">
+            <input type="text" maxlength="50" id="keyWordBuilt1" class="tagHelper"> &nbsp;
+            <button class="btn btn-xs btn-primary" (click)="copyTags($event)">
+                <span class="glyphicon glyphicon-copy" aria-hidden="true"> Copy</span>
+            </button>
+        </div>
+        <div class="tagLine">
+            <input type="text" maxlength="50" id="keyWordBuilt2" class="tagHelper"> &nbsp;
+            <button class="btn btn-xs btn-primary" (click)="copyTags($event)">
+                <span class="glyphicon glyphicon-copy" aria-hidden="true"> Copy</span>
+            </button>
+        </div>
+        <div class="tagLine">
+            <input type="text" maxlength="50" id="keyWordBuilt3" class="tagHelper"> &nbsp;
+            <button class="btn btn-xs btn-primary" (click)="copyTags($event)">
+                <span class="glyphicon glyphicon-copy" aria-hidden="true"> Copy</span>
+            </button>
+        </div>
+        <div class="tagLine">
+            <input type="text" maxlength="50" id="keyWordBuilt4" class="tagHelper"> &nbsp;
+            <button class="btn btn-xs btn-primary" (click)="copyTags($event)">
+                <span class="glyphicon glyphicon-copy" aria-hidden="true"> Copy</span>
+            </button>
+        </div>
+    </div>
 </div>

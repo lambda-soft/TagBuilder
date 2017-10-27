@@ -1,3 +1,5 @@
+import { AmazonAutoCompleteService } from './services/amazon-auto-complete.service';
+import { AutotcompleteService } from './services/autotcomplete.service';
 import { HomeComponent } from './home/home.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
@@ -12,6 +14,7 @@ import { AmazonComponent } from './amazon/amazon.component';
 import { EbayComponent } from './ebay/ebay.component';
 
 import * as alasql from 'alasql';
+import { ZippyInstructionsComponent } from './zippy-instructions/zippy-instructions.component';
 
 const appRoutes: Routes = [
   {
@@ -29,6 +32,10 @@ const appRoutes: Routes = [
   {
     path: 'ebay',
     component: EbayComponent
+  },
+  {
+    path: '**',
+    component: HomeComponent
   }
 ];
 
@@ -38,7 +45,8 @@ const appRoutes: Routes = [
     NavbarComponent,
     HomeComponent,
     AmazonComponent,
-    EbayComponent
+    EbayComponent,
+    ZippyInstructionsComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +56,9 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
 
   ],
-  providers: [],
+  providers: [
+    AmazonAutoCompleteService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

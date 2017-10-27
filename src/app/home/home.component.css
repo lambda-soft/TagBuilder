@@ -1,0 +1,15 @@
+.jumbotron{
+    border-radius: 8px;
+    padding-left: 20px;
+}
+.jumbotron> h1, p{
+    text-align:center;
+}
+h1.title{
+    text-align: center;
+    margin: 50px;
+}
+h3.title{
+    text-align: center;
+    margin: 50px;
+}
