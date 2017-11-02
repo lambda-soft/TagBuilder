@@ -40,6 +40,10 @@ const appRoutes: Routes = [
     component: LoginComponent
   },
   {
+    path: 'signup',
+    component: SignUpFormComponent
+  },
+  {
     path: '**',
     component: HomeComponent
   }

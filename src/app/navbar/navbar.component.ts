@@ -10,8 +10,7 @@ export class NavbarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('init');
-    $(document).ready(d =>{
+    $(document).ready( () =>{
       $(document).click(event =>{
         let isOpened = $('.navbar-collapse').hasClass('collapse in');
         if(isOpened)
