@@ -250,6 +250,9 @@ export class AmazonComponent implements OnInit {
   keywordFromSearch(event) {
     let keywords = [];
     let parent = $(event.target).parent();
+    if($(parent).is("button"))
+      parent = $(parent).parent();
+    
     let searchQuery = (($(parent).children("input").val()) as string).toLowerCase();
     
     this.resetDisplays();

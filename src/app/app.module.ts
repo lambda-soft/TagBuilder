@@ -15,6 +15,8 @@ import { EbayComponent } from './ebay/ebay.component';
 
 import * as alasql from 'alasql';
 import { ZippyInstructionsComponent } from './zippy-instructions/zippy-instructions.component';
+import { LoginComponent } from './login/login.component';
+import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
 
 const appRoutes: Routes = [
   {
@@ -34,6 +36,10 @@ const appRoutes: Routes = [
     component: EbayComponent
   },
   {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
     path: '**',
     component: HomeComponent
   }
@@ -46,7 +52,9 @@ const appRoutes: Routes = [
     HomeComponent,
     AmazonComponent,
     EbayComponent,
-    ZippyInstructionsComponent
+    ZippyInstructionsComponent,
+    LoginComponent,
+    SignUpFormComponent
   ],
   imports: [
     BrowserModule,

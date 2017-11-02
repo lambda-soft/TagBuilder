@@ -6,7 +6,7 @@ import { Http } from '@angular/http';
 export class AmazonAutoCompleteService extends AutotcompleteService {
 
   constructor(http: Http) { 
-    super("http://api.slkcellular.com/api/amazon?q=",http);
+    super("https://api.slkcellular.com/api/amazon?q=",http);
   }
 
 }
