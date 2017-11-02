@@ -1,15 +1,31 @@
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
-    <div class="collapse navbar-collapse">
+
+    <div class="navbar-header">
+      <a href="/" class="navbar-brand">SEO Optimzer</a>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="glyphicon glyphicon-menu-hamburger"></span>
+      </button>
+    </div>
+    <div id="navbarCollapse" class="navbar-collapse collapse" style="height: 1px;">
       <ul class="nav navbar-nav">
         <!-- <li routerLinkActive="active current"><a routerLink="/followers" [queryParams]="{page: 1, order: 'newest' }">Followers</a></li>
         <li routerLinkActive="active current"><a routerLink="/posts">Posts</a></li> -->
-        <li routerLinkActive="active current"><a routerLink="/home">Home</a></li>
-        <li routerLinkActive="active current"><a routerLink="/amazon">Amazon</a></li>
-        <li routerLinkActive="active current"><a routerLink="/ebay">eBay</a></li>
+        <li routerLinkActive="active current">
+          <a routerLink="/home">Home</a>
+        </li>
+        <li routerLinkActive="active current">
+          <a routerLink="/amazon">Amazon</a>
+        </li>
+        <li routerLinkActive="active current">
+          <a routerLink="/ebay">eBay</a>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li routerLinkActive="active current"><a routerLink="/login">Log In / Sign up</a></li>
+        <li class="divider" role="separator"></li>
+        <li routerLinkActive="active current" style="padding-right: 35px;">
+          <a routerLink="/login">Log In / Sign Up</a>
+        </li>
       </ul>
     </div>
   </div>
